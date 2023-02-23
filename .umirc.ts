@@ -18,4 +18,7 @@ export default defineConfig({
   sass: {
     implementation: require('node-sass'),
   },
+  externals: {
+    react: 'window.React',
+  },
 });

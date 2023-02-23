@@ -6,22 +6,32 @@
  * @FilePath: \lowcode-platform\src\componets\LowcodeEngine\preview.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import ReactDOM from 'react-dom';
 import React, { useState } from 'react';
 import { Loading } from '@alifd/next';
-import { buildComponents, assetBundle, AssetLevel, AssetLoader } from '@alilc/lowcode-utils';
+import {
+  buildComponents,
+  assetBundle,
+  AssetLevel,
+  AssetLoader,
+} from '@alilc/lowcode-utils';
 import ReactRenderer from '@alilc/lowcode-react-renderer';
 import { injectComponents } from '@alilc/lowcode-plugin-inject';
-import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler'
+import { createFetchHandler } from '@alilc/lowcode-datasource-fetch-handler';
 
-import { getProjectSchemaFromLocalStorage, getPackagesFromLocalStorage } from './services/mockService';
+import {
+  getProjectSchemaFromLocalStorage,
+  getPackagesFromLocalStorage,
+} from './services/mockService';
 
 const getScenarioName = function () {
   if (location.search) {
-    return new URLSearchParams(location.search.slice(1)).get('scenarioName') || 'index';
+    return (
+      new URLSearchParams(location.search.slice(1)).get('scenarioName') ||
+      'index'
+    );
   }
   return 'index';
-}
+};
 
 const Preview = () => {
   const [data, setData] = useState({});
@@ -53,7 +63,9 @@ const Preview = () => {
     // TODO asset may cause pollution
     const assetLoader = new AssetLoader();
     await assetLoader.load(libraryAsset);
-    const components = await injectComponents(buildComponents(libraryMap, componentsMap));
+    const components = await injectComponents(
+      buildComponents(libraryMap, componentsMap),
+    );
 
     setData({
       schema,
@@ -76,11 +88,12 @@ const Preview = () => {
         components={components}
         appHelper={{
           requestHandlersMap: {
-            fetch: createFetchHandler()
-          }
+            fetch: createFetchHandler(),
+          },
         }}
       />
     </div>
   );
 };
 
+export default Preview;
